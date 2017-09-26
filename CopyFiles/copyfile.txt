@@ -1,0 +1,2 @@
+copy /Y E:\Logo\logo6622.prn C:\incoming\screen\logo.prn  
+copy /Y E:\Logo\logo6622.prn C:\40colfil\logo.prn
