@@ -1,0 +1,65 @@
+Register DLL "ssdsNDCFUNS" Function "CharAsIndex" Returns uinteger Arguments ( mstring ) 
+Register DLL "ssdsNDCFUNS" Function "CharAsInt" Returns uinteger Arguments ( mstring ) 
+Register DLL "ssdsNDCFUNS" Function "IndexString" Returns uinteger Arguments ( mstring , mstring ) 
+Register DLL "ssdsNDCFUNS" Function "FindPrintFlag" Returns integer Arguments (char)
+Register DLL "ssdsNDCFUNS" Function "TakePicture0" Returns void
+Register DLL "ssdsNDCFUNS" Function "NDCUnPack" Returns mstring ByRef Arguments ( mstring )
+Register DLL "ssdsNDCFUNS" Function "GrantSession" Returns void Arguments ( uinteger ) 
+Register DLL "ssdsNDCFUNS" Function "SessionRelease" Returns void Arguments ( uinteger ) 
+Register DLL "ssdsNDCFUNS" Function "SessionComplete" Returns void Arguments ( uinteger ) 
+Register DLL "ssdsNDCFUNS" Function "SessionStarted" Returns void Arguments ( uinteger ) 
+Register DLL "ssdsNDCFUNS" Function "DisplayNestedScreen" Returns void Arguments (long , integer)
+Register DLL "ssdsNDCFUNS" Function "SupervisorTestCash" Returns mstring ByRef
+Register DLL "ssdsNDCFUNS" Function "IntToHexChar" Returns mstring ByRef Arguments ( uinteger)
+Register DLL "ssdsNDCFUNS" Function "HexCoordNum" Returns mstring ByRef Arguments ( uinteger )
+Register DLL "ssdsNDCFUNS" Function "ScreenDispUpdate" Returns void 
+Register DLL "ssdsNDCFUNS" Function "GetTCPIPEntry" Returns mstring ByRef Arguments ( uinteger , mstring, uinteger )
+Register DLL "ssdsNDCFUNS" Function "SetTCPIPEntry" Returns uinteger Arguments ( uinteger , mstring , mstring, uinteger )  
+Register DLL "ssdsNDCFUNS" Function "ValidateTCPIPEntry" Returns uinteger Arguments ( uinteger , mstring, uinteger, mstring )  
+Register DLL "ssdsNDCFUNS" Function "IsBNAThere" Returns integer
+Register DLL "ssdsNDCFUNS" Function "IsCPMThere" Returns integer
+Register DLL "ssdsNDCFUNS" Function "BNAUpdateActiveStatus" Returns integer
+Register DLL "ssdsNDCFUNS" Function "BNACalculateEscrowedNotes" Returns long Arguments ( mstring ByRef )
+Register DLL "ssdsNDCFUNS" Function "BNATranslateString" Returns mstring ByRef Arguments( mstring )
+Register DLL "ssdsNDCFUNS" Function "BNAInitialiseNoteInformation" Returns void
+Register DLL "ssdsNDCFUNS" Function "SetBNAMediaEntryIndicator" Returns void Arguments ( integer )
+Register DLL "ssdsNDCFUNS" Function "DisplayStringToScreen" Returns integer Arguments ( string )
+Register DLL "ssdsNDCFUNS" Function "StartFDKEntry" Returns integer Arguments ( integer, integer )
+Register DLL "ssdsNDCFUNS" Function "StopFDKEntry" Returns void
+Register DLL "ssdsNDCFUNS" Function "UpdateBNADeviceStatusInformation" Returns void Arguments ( mstring , integer ByRef, integer ByRef , integer ByRef)
+Register DLL "ssdsNDCFUNS" Function "RetrieveEJUploadBlock" Returns mString ByRef Arguments ( integer , integer ByRef, integer ByRef)
+Register DLL "ssdsNDCFUNS" Function "XORPan" Returns mstring ByRef Arguments ( mstring, mstring, integer  )
+Register DLL "ssdsNDCFUNS" Function "ClearCash" Returns integer
+Register DLL "ssdsNDCFUNS" Function "ValidateMappingTable" Returns uinteger Arguments ( mstring ) 
+Register DLL "ssdsNDCFUNS" Function "TcpIpComms" Returns integer
+Register DLL "ssdsNDCFUNS" Function "NDCReleaseAllDevices" Returns void
+Register DLL "ssdsNDCFUNS" Function "TestAndClearEnvelopeDisp" Returns void
+Register DLL "ssdsNDCFUNS" Function "IsCardInReader" Returns integer
+Register DLL "ssdsNDCFUNS" Function "PinToEPP" Returns integer Arguments ( mstring, integer )
+Register DLL "ssdsNDCFUNS" Function "IsNightSafeFull" Returns integer
+Register DLL "ssdsNDCFUNS" Function "PrintReceiptFooter" Returns void
+Register DLL "ssdsNDCFUNS" Function "FindPrintStatementFlag" Returns integer Arguments (char)
+Register DLL "ssdsNDCFUNS" Function "DispenseEnvelope" Returns void
+Register DLL "copyfile" Function "UserCopyfile" Returns integer
+Register DLL "ssdsNDCFUNS" Function "GetCamVersionNumber" Returns mString ByRef
+Register DLL "ssdsNDCFUNS" Function "GetCoreVersionNumber" Returns mString ByRef
+Register DLL "ssdsNDCFUNS" Function "GetSCRWVersionNumber" Returns mString ByRef
+Register DLL "ssdsNDCFUNS" Function "SetLastMesStatusGood" Returns integer
+Register DLL "ssdsNDCFUNS" Function "GetLastMesStatus" Returns integer
+Register DLL "ssdsNDCFUNS" Function "SetLastMesStatusNotSent" Returns integer
+Register DLL "ssdsNDCFUNS" Function "StartExchange" Returns integer
+Register DLL "ssdsNDCFUNS" Function "EndExchange" Returns integer
+Register DLL "ssdsNDCFUNS" Function "ShutdownATM" Returns integer Arguments ( integer )
+Register DLL "ssdsNDCFUNS" Function "VDMSupported" Returns integer
+Register DLL "ssdsNDCFUNS" Function "OOXFSInitialise" Returns void
+Register DLL "SSDSNDCFUNS" Function "ClearCashCounts" Returns void
+Register DLL "ssdsNDCFUNS" Function "CardWriterStateTypeFunction" Returns integer
+Register DLL "ssdsNDCFUNS" Function "DeleteEJLog" Returns integer 
+Register DLL "ssdsNDCFUNS" Function "CheckHardDiskSize" Returns long
+Register DLL "ssdsNDCFUNS" Function "IsMultiVendor" Returns integer
+Register DLL "ssdsNDCFUNS" Function "ClearDepositoryTransport" Returns integer
+Register DLL "ssdsNDCFUNS" Function "VerifyCassType" Returns integer Arguments ( mString )
+Register DLL "ssdsNDCFUNS" Function "NCRKeyManger" Returns integer
+Register DLL "ssdsNDCFUNS" Function "IsNCR" Returns integer
+Register DLL "ssdsNDCFUNS" Function "MVEncryptorINIT" Returns integer Arguments ( integer )
+Register DLL "CpFile" Function "SupCopyFile" Returns void Arguments(ushort, ushort, uchar)

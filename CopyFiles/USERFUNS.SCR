@@ -1,0 +1,1 @@
+Register DLL "CpFile" Function "SupCopyFile" Returns void Arguments(ushort, ushort, uchar)

@@ -1,0 +1,205 @@
+
+Reference NDC+ Release 6.01 Using NDC+ Exits (Understanding VCCONT)
+       
+Given -
+	NDCEXITS.CPP (Contains all Stub functions for most possible exits)
+
+	CREATE a directory and copy file into it.
+
+	MISCONT (All Updated to use NDCEXITS as the DLL).
+	STCONT
+	SUPCTR
+	VCCONT
+
+Create NDCEXITS project :-
+
+1. Create Using Microsoft Visual Studio C++ a New MSDEV Project called NDCEXITS of type (WIN32 Dynamic Link Library)
+
+2. Add NDCEXITS.CPP to workspace
+
+3. Add <NTGLOBAL>\TEST\INCLUDE directory to project settings
+
+	Project Settings-> C/C++ -> Preprocessor -> Additional Include Directories
+
+4. Add Library Files To Project :-
+
+	<NTGLOBAL>\TEST\LIB\NDCCUST.LIB (Display Screen etc.)
+	<NTGLOBAL>\TEST\LIB\NDCDATA.LIB (Customisation Data (GetInteger, PutInteger)
+	<NTGLOBAL>\TEST\LIB\MSGUTILS.LIB (SendUnformattedMessage)
+	<NTGLOBAL>\TEST\LIB\EXUTIL.LIB
+
+5. Change Project Settings C/C++ Code Generation:-
+ 	Multithreaded DLL, 
+	Struct Member Alignment 1 Byte
+
+6. Remove _DEBUG from C/C++ Preprocessor
+
+7. Build DLL and copy to <NTGLOBAL>\TEST\DLL
+
+8. Update VCCONT to load new DLL and run InboundMessageIntercept and OutboundMessageIntercept functions when NDC Message Sender or NDC Message Receiver called :-
+     
+ 0 (Inbound) NDCEXITS <Group Separator (ALT-29)> InboundMessageIntercept <Field Separator (ALT-28) 1 (Outbound) NDCEXITS <Group Separator (ALT-29)> OutboundMessageIntercept <Field Separator (ALT-28)
+
+Should look like :-
+
+	0NDCEXITS?InboundMessageIntercept?1NDCEXITS?OutboundMessageIntercept??
+
+9. Create a new Application To Test Inbound and Outbound Messages.
+
+	- Open Customisation Layer Project
+
+	- Create New Catalog
+
+	- Create New Application
+
+	- Add Top Worker (Director)
+
+	- Add 'NDC Customisation Data Initialiser' to start WG.
+		This looks at the Exit files (VCCONT, STCONT etc. and initailises
+		all exit routines - the Start of Day Hook will also be called 
+                if the correct file is set-up with the exit routine).
+
+	- Add Workgroup for NDC Message Sender (Tie Up Signal from Start WG)
+
+		- Add NDC Message Sender Worker
+			Add S4 Comms Connection (Attribute "TPA CONNECTION").
+			Add String Store initialised to "HELLO NDC EXIT"
+
+	- Add Workgroup to tie up NDC Message Sender Signals.
+
+10.  Run Simulator
+
+11.  Run Application - check output in C:\EXIT.LOG
+
+
+		
+*********************
+
+Exiting from the Workflow....
+
+What we are trying to do is exit from and FDK Selection State...
+ 
+[071] [Y] 8 FDK Selection
+      Screen Number           [114]
+      Timeout Next State No   [473]
+      Cancel Next State No    [445]
+      FDK Next State No       [072] <--- Pressed an FDK Goto 072
+      Extension State No      [255]
+      Buffer Position         [000]
+      FDK Active Mask         [127]
+      Multi Language Screens  [000]
+ 
+[072] [W] FDK Switch
+      FDK 'A' Next State No   [203]
+      FDK 'B' Next State No   [204]
+      FDK 'C' Next State No   [205]
+      FDK 'D' Next State No   [206]
+      FDK 'F' Next State No   [207]
+      FDK 'G' Next State No   [208]
+      FDK 'H' Next State No   [209] <---- Pressed FDK 'H' Next State 209
+      FDK 'I' Next State No   [000]
+ 
+We dont want to execute the next state...we will use an 'Exit Condition Worker' 
+so that this state is not executed.
+
+So instead of doing this...we will do a Barcode Transaction and then offer another transaction (071).
+.
+[209] [D] Preset Op. Code Buffer
+      Next State #            [420]
+      Clear Mask              [067]
+      'A' Pre-Set Mask        [066]
+      'B' Pre-Set Mask        [001]
+      'C' Pre-Set Mask        [000]
+      'D' Pre-Set Mask        [000]
+      Reserved                [000]
+      Extension State         [000]
+ 
+[420] [I] Transaction Request
+      Screen Number           [172]
+      Response Timeout State #[473]
+      Send Track 2 Data       [001]
+      Send Track 1 and/or 3   [001]
+      Send Operation Code     [001]
+      Send Amount Data        [001]
+      Send PIN Buffer         [001]
+      Send General Buff (or X)[003]
+
+We will skip the last two states and then return to 071... and offer more transactions.
+ 
+[473] [J] Close
+      Receipt Delivered Screen[160]
+      Next State Number       [000]
+      No Receipt Delivered Scr[150]
+      Card Retained Screen    [156]
+      Statement Delivered Scr [000]
+      Must Be 000 (Reserved)  [000]
+      DPM Doc Captured Scr    [000]
+      Extension State         [000]
+ 
+---- Barcode Example
+
+1. Add Exit Condition Worker to NDC Processing State Executor (Attribute 209)
+
+2. Add New WG - tie up signal - Add Director
+
+3. To Director Copy Active Script Host from 'Barcode Example' (Active X Sample Appliucation)
+
+4. Replace Barcode Control and change Display Attribute to 640x480
+
+5. Set Next State Number based on outcome
+
+	Good - Another FDK Selection (71)
+	Bad - Close State (209)
+
+	(use Assigner to set Next State Number (found in CDI - Transaction Processing Flags)
+
+6. Tie up signals to pass-thru and return to NDC Processing State Executor.
+
+7. Change Clear Screen On Exit Attribute to True on NDC Processing to get rid of Blue Screen so that
+   the Barcode Control is made visible (have to do this if you want to display any SSDS display workers).
+
+---
+
+Web Site :-
+
+Need Local HTML Files (ONE.HTML and TWO.HTML)
+
+0. Change Clear Screen On Exit to TRUE for Close State Executor in Card Read.
+
+1. Add FDK (Pos 17) to Idle Loop
+
+2. Tie signal to new workgroup with Director containing Active X Script Host
+
+	Add Control 'Microsoft Web Control'
+
+	Set up attribute and edit 'activate' script 		"myWEB.Navigate2("file://wherever\one.html")
+
+	Share FDK with Host and tie signal back to Idle
+
+----
+
+Update CDT Build
+
+Do all other workshops
+
+Add Updated Files to MOREDLLS (VCCONT & NDCEXITS.DLL)
+
+Build Final of CL (Should pick up new files)
+
+Do CDT Build (Export of New Application).
+
+
+----
+
+
+*** Educate attendees in the rules for enhancing – what we want them to change, and not change
+
+
+* Session Request / Release - MUST BE FOLLOWED!!!!!!!!
+
+	* Exiting from State Flow - Must be aware that the time you are in your authored work the SST cannot be brought Out of Service
+
+
+* Make sure the Next State Number is a valid state number (know your State Flow) otherwise Close State Will be taken.
+
+
